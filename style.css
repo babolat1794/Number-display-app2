@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字表示アプリ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="number-display"></div>
+
+    <div id="controls">
+        <button id="toggle-btn">停止</button>
+        <button id="end-btn">終了</button>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>body {
+    background-color: black;
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-between;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+/* 10桁が縦画面で収まるサイズ（約8vw） */
+#number-display {
+    font-size: 8vw;
+    text-align: center;
+    margin-top: 20vh;
+    letter-spacing: 0.2vw;
+}
+
+#controls {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 40px;
+}
+
+button {
+    width: 120px;
+    height: 60px;
+    font-size: 20px;
+    border-radius: 8px;
+    border: none;
+    background-color: #444;
+    color: white;
+}
+button:active {
+    background-color: #666;
+}
