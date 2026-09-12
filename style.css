@@ -1,22 +1,4 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>数字表示アプリ</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div id="number-display"></div>
-
-    <div id="controls">
-        <button id="toggle-btn">停止</button>
-        <button id="end-btn">終了</button>
-    </div>
-
-    <script src="app.js"></script>
-</body>
-</html>body {
+body {
     background-color: black;
     color: white;
     margin: 0;
@@ -24,35 +6,92 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     font-family: Arial, sans-serif;
 }
 
-/* 10桁が縦画面で収まるサイズ（約8vw） */
+/* 数字表示（大きめ） */
 #number-display {
-    font-size: 8vw;
+    font-size: 13vw;
     text-align: center;
-    margin-top: 20vh;
-    letter-spacing: 0.2vw;
+    margin-top: 8vh;
+    letter-spacing: 0.6vw;
 }
 
+/* 3行分のスペース */
+.space-3lines {
+    height: 3em;
+}
+
+/* 1行分のスペース */
+.space-1line {
+    height: 1.5em;
+}
+
+/* 停止・終了ボタン（小さく＆数字からさらに下げる） */
 #controls {
     width: 100%;
     display: flex;
     justify-content: space-around;
-    margin-bottom: 40px;
+    margin-top: 2em;
 }
 
-button {
-    width: 120px;
-    height: 60px;
-    font-size: 20px;
+.main-btn {
+    width: 35vw;
+    max-width: 180px;
+    height: 45px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+    background-color: #00aa00; /* 緑 */
+    color: white;
+    font-weight: bold;
+}
+.main-btn:active {
+    background-color: #009900;
+}
+
+/* 表示時間選択ボタン（黄緑） */
+#time-select {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1em;
+}
+
+.time-btn {
+    width: 80px;
+    height: 45px;
+    font-size: 18px;
     border-radius: 8px;
     border: none;
-    background-color: #444;
-    color: white;
+    background-color: #99ff66; /* 黄緑 */
+    color: black;
+    font-weight: bold;
 }
-button:active {
-    background-color: #666;
+.time-btn:active {
+    background-color: #88ee55;
+}
+
+/* 音声ボタン（オレンジ） */
+#voice-area {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5em;
+}
+
+.voice-btn {
+    width: 80px;
+    height: 45px;
+    font-size: 18px;
+    border-radius: 8px;
+    border: none;
+    background-color: orange;
+    color: black;
+    font-weight: bold;
+}
+.voice-btn:active {
+    background-color: #ff9900;
 }
