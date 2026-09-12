@@ -7,11 +7,32 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- 数字表示 -->
     <div id="number-display"></div>
 
+    <!-- 数字の下に3行分の余白 -->
+    <div class="space-3lines"></div>
+
+    <!-- 停止・終了ボタン（小さめ） -->
     <div id="controls">
-        <button id="toggle-btn">停止</button>
-        <button id="end-btn">終了</button>
+        <button id="toggle-btn" class="main-btn">停止</button>
+        <button id="end-btn" class="main-btn">終了</button>
+    </div>
+
+    <!-- 1行分の余白 -->
+    <div class="space-1line"></div>
+
+    <!-- 表示時間選択ボタン -->
+    <div id="time-select">
+        <button class="time-btn" data-time="5000">5秒</button>
+        <button class="time-btn" data-time="7000">7秒</button>
+        <button class="time-btn" data-time="9000">9秒</button>
+    </div>
+
+    <!-- 音声ボタン -->
+    <div id="voice-area">
+        <button id="voice-btn" class="voice-btn">音声</button>
     </div>
 
     <script src="app.js"></script>
