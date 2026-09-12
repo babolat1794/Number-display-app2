@@ -1,20 +1,59 @@
 let isRunning = true;
 let timer = null;
 
-// 表示時間（秒）を選択可能：5秒・7秒・9秒
-const displayTimes = [5000, 7000, 9000];
+// 初期表示時間（デフォルトは5秒）
+let currentDisplayTime = 5000;
 
-// ランダム桁数の数字を生成（1〜10桁）
-function generateRandomNumber() {
-    const length = Math.floor(Math.random() * 10) + 1; // 1〜10桁
-    let num = "";
-    for (let i = 0; i < length; i++) {
-        num += Math.floor(Math.random() * 10);
+// 日本語読み上げ（位取り対応）
+function readJapaneseNumber(numStr) {
+    const num = Number(numStr.replace(/,/g, ""));
+
+    const units = ["", "万", "億"];
+    let parts = [];
+    let temp = num;
+
+    while (temp > 0) {
+        parts.push(temp % 10000);
+        temp = Math.floor(temp / 10000);
     }
-    return num;
+
+    let result = [];
+
+    parts.forEach((part, index) => {
+        if (part === 0) return;
+
+        let text = "";
+        const thousands = Math.floor(part / 1000);
+        const hundreds = Math.floor((part % 1000) / 100);
+        const tens = Math.floor((part % 100) / 10);
+        const ones = part % 10;
+
+        if (thousands > 0) text += (thousands === 1 ? "せん" : thousands + "せん");
+        if (hundreds > 0) text += (hundreds === 1 ? "ひゃく" : hundreds + "ひゃく");
+        if (tens > 0) text += (tens === 1 ? "じゅう" : tens + "じゅう");
+        if (ones > 0) text += ones;
+
+        text += units[index];
+        result.unshift(text);
+    });
+
+    return result.join("");
 }
 
-// 数字を表示し続けるメイン処理
+// ランダム数字生成（先頭ゼロ禁止＋コンマ区切り）
+function generateRandomNumber() {
+    const length = Math.floor(Math.random() * 10) + 1;
+
+    let num = String(Math.floor(Math.random() * 9) + 1);
+
+    for (let i = 1; i < length; i++) {
+        num += Math.floor(Math.random() * 10);
+    }
+
+    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+// 数字表示ループ
 function startSequence() {
     const display = document.getElementById("number-display");
 
@@ -24,15 +63,13 @@ function startSequence() {
         const num = generateRandomNumber();
         display.textContent = num;
 
-        const duration = displayTimes[Math.floor(Math.random() * displayTimes.length)];
-
-        timer = setTimeout(showNext, duration);
+        timer = setTimeout(showNext, currentDisplayTime);
     }
 
     showNext();
 }
 
-// 停止／再開ボタン
+// 停止／再開
 document.getElementById("toggle-btn").addEventListener("click", () => {
     const btn = document.getElementById("toggle-btn");
 
@@ -47,10 +84,27 @@ document.getElementById("toggle-btn").addEventListener("click", () => {
     }
 });
 
-// 終了ボタン（PWAではホーム画面に戻る動作）
+// 終了
 document.getElementById("end-btn").addEventListener("click", () => {
-    window.close(); // Safariでは閉じられない場合がある
-    location.href = "about:blank"; // ホーム画面に戻る代替動作
+    window.close();
+    location.href = "about:blank";
+});
+
+// 表示時間変更
+document.querySelectorAll(".time-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        currentDisplayTime = Number(btn.dataset.time);
+    });
+});
+
+// 音声読み上げ
+document.getElementById("voice-btn").addEventListener("click", () => {
+    const num = document.getElementById("number-display").textContent;
+    const text = readJapaneseNumber(num);
+
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = "ja-JP";
+    speechSynthesis.speak(utter);
 });
 
 // 初回起動
